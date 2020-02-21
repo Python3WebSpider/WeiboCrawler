@@ -191,14 +191,12 @@ class ElasticsearchPipeline(object):
     pipeline for elasticsearch
     """
     
-    def __init__(self, connection_string, mappings):
+    def __init__(self, connection_string):
         """
         init connection_string and mappings
         :param connection_string:
-        :param mappings:
         """
         self.connection_string = connection_string
-        self.mappings = mappings
     
     @classmethod
     def from_crawler(cls, crawler):
@@ -209,7 +207,6 @@ class ElasticsearchPipeline(object):
         """
         return cls(
             connection_string=crawler.settings.get('ELASTICSEARCH_CONNECTION_STRING'),
-            mappings=crawler.settings.get('ELASTICSEARCH_MAPPINGS'),
         )
     
     def open_spider(self, spider):
@@ -220,7 +217,7 @@ class ElasticsearchPipeline(object):
         """
         self.conn = Elasticsearch(
             hosts=[self.connection_string],
-            use_ssl=True,
+            use_ssl=False,
             verify_certs=False
         )
     
