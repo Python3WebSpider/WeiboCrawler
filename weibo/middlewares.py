@@ -39,7 +39,7 @@ class ProxyMiddleware(object):
         """
         if request.meta.get('retry_times'):
             proxy = self.get_random_proxy()
-            self.logger.debug('get proxy %s', proxy)
+            self.logger.debug('Get proxy %s', proxy)
             if proxy:
                 uri = 'http://{proxy}'.format(proxy=proxy)
                 self.logger.debug('Using proxy %s', proxy)

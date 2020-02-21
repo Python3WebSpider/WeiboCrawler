@@ -84,7 +84,7 @@ DOWNLOADER_MIDDLEWARES = {
 #    'scrapy.extensions.telnet.TelnetConsole': None,
 # }
 
-CONCURRENT_REQUESTS = 200
+CONCURRENT_REQUESTS = 20
 
 # COOKIES_ENABLED = False
 
