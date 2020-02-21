@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: crawler
+---
+apiVersion: v1
+items:
+  - apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+        kompose.version: 1.20.0 ()
+      creationTimestamp: null
+      labels:
+        io.kompose.service: crawler-weibo-universal
+      name: crawler-weibo-universal
+      namespace: crawler
+    spec:
+      replicas: 5
+      revisionHistoryLimit: 0
+      strategy: {}
+      template:
+        metadata:
+          annotations:
+            kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+            kompose.version: 1.20.0 ()
+          creationTimestamp: null
+          labels:
+            io.kompose.service: crawler-weibo-universal
+        spec:
+          containers:
+            - args:
+                - scrapy
+                - crawl
+                - universal
+              env:
+                - name: ELASTICSEARCH_CONNECTION_STRING
+                  valueFrom:
+                    secretKeyRef:
+                      name: elasticsearch
+                      key: connection_string
+                - name: REDIS_CONNECTION_STRING
+                  valueFrom:
+                    secretKeyRef:
+                      name: redis
+                      key: connection_string
+                - name: PROXY_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: proxypool
+                      key: universal
+              image: germey/crawler-weibo-universal
+              name: crawler-weibo-universal
+              resources: {}
+          restartPolicy: Always
+    status: {}
+kind: List
+metadata: {}

@@ -1,0 +1,8 @@
+elasticsearch==7.0.2
+Twisted==19.2.1
+urllib3==1.23
+Scrapy==1.6.0
+requests==2.22.0
+environs==7.2.0
+pymongo==3.10.1
+scrapy-redis==0.6.8

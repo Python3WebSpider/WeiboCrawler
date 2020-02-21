@@ -1,0 +1,12 @@
+version: '3'
+services:
+  crawler-weibo-universal:
+    container_name: 'crawler-weibo-universal'
+    restart: always
+    build: .
+    image: 'germey/crawler-weibo-universal'
+    command: 'scrapy crawl universal'
+    environment:
+      ELASTICSEARCH_CONNECTION_STRING:
+      REDIS_CONNECTION_STRING:
+      PROXY_URL:
