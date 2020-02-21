@@ -51,7 +51,7 @@ items:
                     secretKeyRef:
                       name: proxypool
                       key: universal
-              image: germey/crawler-weibo-universal
+              image: germey/crawler-weibo-universal:${TAG}
               name: crawler-weibo-universal
               resources: {}
           restartPolicy: Always
