@@ -9,6 +9,7 @@ from weibo.items import *
 from twisted.internet.threads import deferToThread
 import pytz
 
+
 class TimePipeline():
     """
     time pipeline
@@ -216,9 +217,7 @@ class ElasticsearchPipeline(object):
         :return:
         """
         self.conn = Elasticsearch(
-            hosts=[self.connection_string],
-            use_ssl=False,
-            verify_certs=False
+            hosts=[self.connection_string]
         )
     
     def _process_item(self, item, spider):
