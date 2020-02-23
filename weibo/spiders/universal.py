@@ -2,7 +2,7 @@ import json
 from scrapy import Request, Spider
 from weibo.items import *
 from urllib.parse import urlparse, parse_qs
-
+import scrapy_redis
 
 class UniversalSpider(Spider):
     """

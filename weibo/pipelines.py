@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import re, time
+from datetime import datetime
 from elasticsearch import Elasticsearch
 from scrapy import Selector
 import pymongo
 from weibo.items import *
 from twisted.internet.threads import deferToThread
-
+import pytz
 
 class TimePipeline():
     """
@@ -21,8 +22,7 @@ class TimePipeline():
         :return:
         """
         if isinstance(item, UserItem) or isinstance(item, WeiboItem) or isinstance(item, CommentItem):
-            now = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
-            item['crawled_at'] = now
+            item['crawled_at'] = datetime.now(tz=pytz.utc)
         return item
 
 

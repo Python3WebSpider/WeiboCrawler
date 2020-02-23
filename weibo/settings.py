@@ -126,6 +126,7 @@ DUPEFILTER_CLASS = 'scrapy_redis.dupefilter.RFPDupeFilter'
 REDIS_URL = env.str('REDIS_CONNECTION_STRING')
 SCHEDULER_PERSIST = True
 REDIS_START_URLS_BATCH_SIZE = 5
+SCHEDULER_QUEUE_KEY = 'weibo:%(spider)s:requests'
 
 # definition of retry
 RETRY_HTTP_CODES = [401, 403, 408, 414, 418, 500, 502, 503, 504]
