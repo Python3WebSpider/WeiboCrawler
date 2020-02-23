@@ -10,3 +10,13 @@ services:
       ELASTICSEARCH_CONNECTION_STRING:
       REDIS_CONNECTION_STRING:
       PROXY_URL:
+  crawler-weibo-comment:
+    container_name: 'crawler-weibo-comment'
+    restart: always
+    build: .
+    image: 'germey/crawler-weibo-comment'
+    command: 'scrapy crawl comment'
+    environment:
+      ELASTICSEARCH_CONNECTION_STRING:
+      REDIS_CONNECTION_STRING:
+      PROXY_URL:
