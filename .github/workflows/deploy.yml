@@ -38,4 +38,6 @@ jobs:
           docker-compose build
           docker tag germey/crawler-weibo-universal germey/crawler-weibo-universal:$BUILD_NUMBER
           docker push germey/crawler-weibo-universal:$BUILD_NUMBER
+          docker tag germey/crawler-weibo-comment germey/crawler-weibo-comment:$BUILD_NUMBER
+          docker push germey/crawler-weibo-comment:$BUILD_NUMBER
           cat deployment.yml | sed 's/\${TAG}/'"$BUILD_NUMBER"'/g' | kubectl apply -f -
