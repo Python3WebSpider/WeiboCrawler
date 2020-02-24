@@ -4,6 +4,7 @@ from weibo.items import *
 from urllib.parse import urlparse, parse_qs
 import scrapy_redis
 
+
 class CommentSpider(Spider):
     """
     universal spider to crawl all weibo
@@ -53,7 +54,7 @@ class CommentSpider(Spider):
                           meta={'page': 1, 'uid': uid}, dont_filter=True)
             # weibos
             yield Request(self.weibo_url.format(uid=uid, page=1), callback=self.parse_weibos,
-                          meta={'page': 1, 'uid': uid, 'name': user_item['name']}, dont_filter=True)
+                          meta={'page': 1, 'uid': uid, 'name': user_item['name']}, dont_filter=True, priority=5)
     
     def parse_follows(self, response):
         """
@@ -123,13 +124,14 @@ class CommentSpider(Spider):
                     weibo_item['user_name'] = response.meta.get('name')
                     yield weibo_item
                     comment_url = self.comment_url.format(id=weibo_item['id'], page=1)
-                    yield Request(comment_url, callback=self.parse_comments, dont_filter=True, priority=5)
+                    yield Request(comment_url, callback=self.parse_comments, dont_filter=True, priority=10)
             
             # next page
             uid = response.meta.get('uid')
             page = response.meta.get('page') + 1
             yield Request(self.weibo_url.format(uid=uid, page=page), callback=self.parse_weibos,
-                          meta={'uid': uid, 'page': page, 'name': response.meta.get('name')}, dont_filter=True)
+                          meta={'uid': uid, 'page': page, 'name': response.meta.get('name')}, dont_filter=True,
+                          priority=5)
     
     def parse_comments(self, response):
         """
@@ -162,4 +164,4 @@ class CommentSpider(Spider):
                 # next page
                 page = str(int(params.get('page')[0]) + 1) if params.get('page') else '2'
                 yield Request(self.comment_url.format(id=params.get('id')[0], page=page),
-                              callback=self.parse_comments, dont_filter=True, priority=5)
+                              callback=self.parse_comments, dont_filter=True, priority=10)
