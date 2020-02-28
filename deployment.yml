@@ -18,7 +18,7 @@ items:
       name: crawler-weibo-comment
       namespace: crawler
     spec:
-      replicas: 30
+      replicas: 10
       revisionHistoryLimit: 1
       strategy: {}
       template:
@@ -53,7 +53,13 @@ items:
                       key: weibo
               image: germey/crawler-weibo-comment:${TAG}
               name: crawler-weibo-comment
-              resources: {}
+              resources:
+                limits:
+                  memory: "200Mi"
+                  cpu: "100m"
+                requests: 
+                  memory: "200Mi"
+                  cpu: "100m"
           restartPolicy: Always
     status: {}
   - apiVersion: extensions/v1beta1
@@ -68,7 +74,7 @@ items:
       name: crawler-weibo-universal
       namespace: crawler
     spec:
-      replicas: 15
+      replicas: 5
       revisionHistoryLimit: 1
       strategy: {}
       template:
@@ -103,7 +109,13 @@ items:
                       key: weibo
               image: germey/crawler-weibo-universal:${TAG}
               name: crawler-weibo-universal
-              resources: {}
+              resources:
+                limits:
+                  memory: "200Mi"
+                  cpu: "100m"
+                requests: 
+                  memory: "200Mi"
+                  cpu: "100m"
           restartPolicy: Always
     status: {}
 kind: List
