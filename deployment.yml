@@ -56,10 +56,10 @@ items:
               resources:
                 limits:
                   memory: "200Mi"
-                  cpu: "100m"
+                  cpu: "150m"
                 requests: 
                   memory: "200Mi"
-                  cpu: "100m"
+                  cpu: "150m"
           restartPolicy: Always
     status: {}
   - apiVersion: extensions/v1beta1
@@ -112,10 +112,10 @@ items:
               resources:
                 limits:
                   memory: "200Mi"
-                  cpu: "100m"
+                  cpu: "150m"
                 requests: 
                   memory: "200Mi"
-                  cpu: "100m"
+                  cpu: "150m"
           restartPolicy: Always
     status: {}
 kind: List
