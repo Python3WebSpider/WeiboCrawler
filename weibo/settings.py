@@ -75,7 +75,8 @@ DEFAULT_REQUEST_HEADERS = {
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     # 'weibo.middlewares.CookiesMiddleware': 554,
-    'weibo.middlewares.ProxyMiddleware': 555 if env.bool('PROXYPOOL_ENABLED', True) else None,
+    'weibo.middlewares.ProxypoolMiddleware': 555 if env.bool('PROXYPOOL_ENABLED', True) else None,
+    'weibo.middlewares.ProxytunnelMiddleware': 556 if env.bool('PROXYTUNNEL_ENABLED', True) else None,
 }
 
 # Enable or disable extensions
@@ -134,7 +135,8 @@ RETRY_TIMES = 20
 DOWNLOAD_TIMEOUT = 10
 
 # definition of proxy
-PROXY_URL = env.str('PROXY_URL')
+PROXYPOOL_URL = env.str('PROXYPOOL_URL')
+PROXYTUNNEL_URL = env.str('PROXYTUNNEL_URL')
 
 # definition of elasticsearch
 ELASTICSEARCH_CONNECTION_STRING = env.str('ELASTICSEARCH_CONNECTION_STRING')

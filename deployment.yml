@@ -46,11 +46,16 @@ items:
                     secretKeyRef:
                       name: redis
                       key: connection_string
-                - name: PROXY_URL
+                - name: PROXYPOOL_URL
                   valueFrom:
                     secretKeyRef:
                       name: proxypool
                       key: weibo
+                - name: PROXYTUNNEL_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: proxytunnel
+                      key: value
               image: germey/crawler-weibo-comment:${TAG}
               name: crawler-weibo-comment
               resources: {}
@@ -101,6 +106,11 @@ items:
                     secretKeyRef:
                       name: proxypool
                       key: weibo
+                - name: PROXYTUNNEL_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: proxytunnel
+                      key: value
               image: germey/crawler-weibo-universal:${TAG}
               name: crawler-weibo-universal
               resources: {}
