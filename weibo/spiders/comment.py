@@ -2,12 +2,11 @@ import json
 from scrapy import Request, Spider
 from weibo.items import *
 from urllib.parse import urlparse, parse_qs
-import scrapy_redis
 
 
 class CommentSpider(Spider):
     """
-    universal spider to crawl all weibo
+    main comment spider to crawl all weibo
     """
     name = 'comment'
     allowed_domains = ['m.weibo.cn']

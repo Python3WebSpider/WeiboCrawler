@@ -3,7 +3,6 @@ import logging
 import urllib3
 from environs import Env
 
-
 urllib3.disable_warnings()
 logging.getLogger('py.warnings').setLevel(logging.ERROR)
 logging.getLogger('urllib3.connectionpool').setLevel(logging.INFO)

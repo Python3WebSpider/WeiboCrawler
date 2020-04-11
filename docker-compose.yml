@@ -20,3 +20,14 @@ services:
       ELASTICSEARCH_CONNECTION_STRING:
       REDIS_CONNECTION_STRING:
       PROXY_URL:
+  crawler-weibo-single:
+    container_name: 'crawler-weibo-single'
+    restart: always
+    build: .
+    image: 'germey/crawler-weibo-single'
+    command: 'scrapy crawl single'
+    environment:
+      ELASTICSEARCH_CONNECTION_STRING:
+      REDIS_CONNECTION_STRING:
+      PROXY_URL:
+      WEIBO_ID: '4467107636950632'

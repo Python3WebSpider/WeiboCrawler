@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: crawler
+---
+apiVersion: v1
+items:
+  - apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+        kompose.version: 1.20.0 ()
+      creationTimestamp: null
+      labels:
+        io.kompose.service: crawler-weibo-comment
+      name: crawler-weibo-comment
+      namespace: crawler
+    spec:
+      replicas: 10
+      revisionHistoryLimit: 1
+      strategy: {}
+      template:
+        metadata:
+          annotations:
+            kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+            kompose.version: 1.20.0 ()
+          creationTimestamp: null
+          labels:
+            io.kompose.service: crawler-weibo-comment
+        spec:
+          containers:
+            - args:
+                - scrapy
+                - crawl
+                - comment
+              env:
+                - name: ELASTICSEARCH_CONNECTION_STRING
+                  valueFrom:
+                    secretKeyRef:
+                      name: elasticsearch
+                      key: connection_string
+                - name: REDIS_CONNECTION_STRING
+                  valueFrom:
+                    secretKeyRef:
+                      name: redis
+                      key: connection_string
+                - name: PROXYPOOL_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: proxypool
+                      key: weibo
+                - name: PROXYTUNNEL_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: proxytunnel
+                      key: value
+              image: germey/crawler-weibo-comment:${TAG}
+              name: crawler-weibo-comment
+              resources:
+                limits:
+                  memory: "200Mi"
+                  cpu: "150m"
+                requests: 
+                  memory: "200Mi"
+                  cpu: "150m"
+          restartPolicy: Always
+    status: {}
+kind: List
+metadata: {}

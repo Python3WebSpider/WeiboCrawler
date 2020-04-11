@@ -1,0 +1,49 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: crawler-weibo-single
+  namespace: crawler
+spec:
+  schedule: "*/15 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - args:
+                - scrapy
+                - crawl
+                - single
+              env:
+                - name: WEIBO_ID
+                  value: '4467107636950632'
+                - name: ELASTICSEARCH_CONNECTION_STRING
+                  valueFrom:
+                    secretKeyRef:
+                      name: elasticsearch
+                      key: connection_string
+                - name: REDIS_CONNECTION_STRING
+                  valueFrom:
+                    secretKeyRef:
+                      name: redis
+                      key: connection_string
+                - name: PROXYPOOL_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: proxypool
+                      key: weibo
+                - name: PROXYTUNNEL_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: proxytunnel
+                      key: value
+              image: germey/crawler-weibo-single:${TAG}
+              name: crawler-weibo-single
+              resources:
+                limits:
+                  memory: "200Mi"
+                  cpu: "150m"
+                requests:
+                  memory: "200Mi"
+                  cpu: "150m"
+          restartPolicy: OnFailure
