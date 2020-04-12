@@ -1,25 +1,25 @@
 version: '3'
 services:
-  crawler-weibo-universal:
-    container_name: 'crawler-weibo-universal'
-    restart: always
-    build: .
-    image: 'germey/crawler-weibo-universal'
-    command: 'scrapy crawl universal'
-    environment:
-      ELASTICSEARCH_CONNECTION_STRING:
-      REDIS_CONNECTION_STRING:
-      PROXY_URL:
-  crawler-weibo-comment:
-    container_name: 'crawler-weibo-comment'
-    restart: always
-    build: .
-    image: 'germey/crawler-weibo-comment'
-    command: 'scrapy crawl comment'
-    environment:
-      ELASTICSEARCH_CONNECTION_STRING:
-      REDIS_CONNECTION_STRING:
-      PROXY_URL:
+#  crawler-weibo-universal:
+#    container_name: 'crawler-weibo-universal'
+#    restart: always
+#    build: .
+#    image: 'germey/crawler-weibo-universal'
+#    command: 'scrapy crawl universal'
+#    environment:
+#      ELASTICSEARCH_CONNECTION_STRING:
+#      REDIS_CONNECTION_STRING:
+#      PROXY_URL:
+#  crawler-weibo-comment:
+#    container_name: 'crawler-weibo-comment'
+#    restart: always
+#    build: .
+#    image: 'germey/crawler-weibo-comment'
+#    command: 'scrapy crawl comment'
+#    environment:
+#      ELASTICSEARCH_CONNECTION_STRING:
+#      REDIS_CONNECTION_STRING:
+#      PROXY_URL:
   crawler-weibo-single:
     container_name: 'crawler-weibo-single'
     restart: always
@@ -29,5 +29,7 @@ services:
     environment:
       ELASTICSEARCH_CONNECTION_STRING:
       REDIS_CONNECTION_STRING:
-      PROXY_URL:
-      WEIBO_ID: '4467107636950632'
+      PROXYPOOL_URL:
+      PROXYTUNNEL_URL:
+      WEIBO_COOKIES:
+      WEIBO_WEIBO_ID: '4467107636950632'

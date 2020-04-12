@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import logging
 import re, time
 from datetime import datetime
 from elasticsearch import Elasticsearch
@@ -8,6 +8,8 @@ import pymongo
 from weibo.items import *
 from twisted.internet.threads import deferToThread
 import pytz
+
+logging.getLogger('scrapy.core.scraper').setLevel(logging.INFO)
 
 
 class TimePipeline():

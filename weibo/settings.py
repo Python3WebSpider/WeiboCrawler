@@ -53,8 +53,8 @@ DEFAULT_REQUEST_HEADERS = {
 # CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-# COOKIES_ENABLED = False
-
+# COOKIES_ENABLED = True
+# COOKIES_DEBUG = True
 # Disable Telnet Console (enabled by default)
 # TELNETCONSOLE_ENABLED = False
 
@@ -73,16 +73,16 @@ DEFAULT_REQUEST_HEADERS = {
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-    # 'weibo.middlewares.CookiesMiddleware': 554,
     'weibo.middlewares.ProxypoolMiddleware': 555 if env.bool('PROXYPOOL_ENABLED', True) else None,
     'weibo.middlewares.ProxytunnelMiddleware': 556 if env.bool('PROXYTUNNEL_ENABLED', True) else None,
 }
 
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
-# EXTENSIONS = {
-#    'scrapy.extensions.telnet.TelnetConsole': None,
-# }
+EXTENSIONS = {
+    # 'scrapy_jsonrpc.webservice.WebService': 499,
+    # 'scrapy_prometheus_exporter.prometheus.WebService': 500,
+}
 
 CONCURRENT_REQUESTS = 20
 
@@ -127,6 +127,7 @@ REDIS_URL = env.str('REDIS_CONNECTION_STRING')
 SCHEDULER_PERSIST = True
 REDIS_START_URLS_BATCH_SIZE = 5
 SCHEDULER_QUEUE_KEY = 'weibo:%(spider)s:requests'
+SCHEDULER_DUPEFILTER_KEY = 'weibo:%(spider)s:dupefilter'
 
 # definition of retry
 RETRY_HTTP_CODES = [401, 403, 408, 414, 418, 500, 502, 503, 504]

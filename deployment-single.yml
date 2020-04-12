@@ -4,7 +4,7 @@ metadata:
   name: crawler-weibo-single
   namespace: crawler
 spec:
-  schedule: "*/15 * * * *"
+  schedule: "*/30 * * * *"
   jobTemplate:
     spec:
       template:
@@ -15,8 +15,13 @@ spec:
                 - crawl
                 - single
               env:
-                - name: WEIBO_ID
+                - name: WEIBO_WEIBO_ID
                   value: '4467107636950632'
+                - name: WEIBO_COOKIES
+                  valueFrom:
+                    secretKeyRef:
+                      name: weibo
+                      key: cookies
                 - name: ELASTICSEARCH_CONNECTION_STRING
                   valueFrom:
                     secretKeyRef:
@@ -39,6 +44,7 @@ spec:
                       key: value
               image: germey/crawler-weibo-single:${TAG}
               name: crawler-weibo-single
+              imagePullPolicy: Always
               resources:
                 limits:
                   memory: "200Mi"
