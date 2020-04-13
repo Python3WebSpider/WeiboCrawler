@@ -68,7 +68,7 @@ class SingleSpider(Spider):
         page = response.meta['page']
         self.logger.info('Crawled Page %s', page)
         result = json.loads(response.text)
-        if result.get('ok'):
+        if result.get('ok') == 1:
             data = result.get('data', {})
             comments = data.get('data')
             max_id = data.get('max_id')

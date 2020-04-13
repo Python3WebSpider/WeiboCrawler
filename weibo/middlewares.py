@@ -48,7 +48,7 @@ class RetryCommentMiddleware(RetryMiddleware):
     def process_response(self, request, response, spider):
         try:
             result = json.loads(response.text)
-            if not result.get('ok'):
+            if not result.get('ok') == 1:
                 logger.info('Retrying times %s', request.meta.get('retry_times', 0))
                 return self._retry(request, 'Status not OK', spider) or response
             return response
