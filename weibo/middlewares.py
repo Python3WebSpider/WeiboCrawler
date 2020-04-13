@@ -46,11 +46,15 @@ class CSRFTokenMiddleware(object):
 class RetryCommentMiddleware(RetryMiddleware):
     
     def process_response(self, request, response, spider):
-        result = json.loads(response.text)
-        if not result.get('ok'):
-            logger.info('Retrying times %s', request.meta.get('retry_times', 0))
-            return self._retry(request, 'Status not OK', spider) or response
-        return response
+        try:
+            result = json.loads(response.text)
+            if not result.get('ok'):
+                logger.info('Retrying times %s', request.meta.get('retry_times', 0))
+                return self._retry(request, 'Status not OK', spider) or response
+            return response
+        except json.decoder.JSONDecodeError:
+            logger.info('Json decode error, content %s', response.text)
+            return self._retry(request, 'Json Decode Error', spider) or response
 
 
 class ProxypoolMiddleware(object):
