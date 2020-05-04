@@ -12,6 +12,7 @@ env = Env()
 START_COMMENT_ID = env.str('START_COMMENT_ID', None)
 print('START_COMMENT_ID', START_COMMENT_ID)
 
+
 class SingleSpider(Spider):
     """
     comment spider of single weibo
@@ -45,7 +46,7 @@ class SingleSpider(Spider):
         "X-Requested-With": "XMLHttpRequest",
     }
     
-    cookies = env.str('WEIBO_COOKIES')
+    cookies = env.str('WEIBO_COOKIES', '')
     page = 1
     
     def start_requests(self):

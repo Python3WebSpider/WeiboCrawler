@@ -6,7 +6,7 @@ metadata:
 ---
 apiVersion: v1
 items:
-  - apiVersion: extensions/v1beta1
+  - apiVersion: apps/v1
     kind: Deployment
     metadata:
       annotations:
@@ -19,6 +19,9 @@ items:
       namespace: crawler
     spec:
       replicas: 10
+      selector:
+        matchLabels:
+          io.kompose.service: crawler-weibo-comment
       revisionHistoryLimit: 1
       strategy: {}
       template:
@@ -53,7 +56,7 @@ items:
                       key: universal
                 - name: PROXYPOOL_ENABLED
                   value: 'true'
-              image: germey/crawler-weibo-comment:${TAG}
+              image: germey/crawler-weibo-comment
               name: crawler-weibo-comment
               resources:
                 limits:

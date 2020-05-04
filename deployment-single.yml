@@ -4,7 +4,7 @@ metadata:
   name: crawler-weibo-single
   namespace: crawler
 spec:
-  schedule: "* */1 * * *"
+  schedule: "*/20 * * * *"
   jobTemplate:
     spec:
       template:
@@ -16,7 +16,7 @@ spec:
                 - single
               env:
                 - name: WEIBO_WEIBO_ID
-                  value: '4496797961825543'
+                  value: '4467107636950632'
                 - name: WEIBO_COOKIES
                   valueFrom:
                     secretKeyRef:

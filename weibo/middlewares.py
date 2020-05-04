@@ -78,7 +78,7 @@ class ProxypoolMiddleware(object):
         :return:
         """
         try:
-            if self.auth:
+            if getattr(self, 'auth') and self.auth:
                 response = requests.get(self.proxypool_url, timeout=5, auth=self.auth)
             else:
                 response = requests.get(self.proxypool_url, timeout=5)
