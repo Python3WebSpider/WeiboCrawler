@@ -4,7 +4,7 @@ metadata:
   name: crawler-weibo-single
   namespace: crawler
 spec:
-  schedule: "*/30 * * * *"
+  schedule: "* */1 * * *"
   jobTemplate:
     spec:
       template:
@@ -16,7 +16,7 @@ spec:
                 - single
               env:
                 - name: WEIBO_WEIBO_ID
-                  value: '4467107636950632'
+                  value: '4496797961825543'
                 - name: WEIBO_COOKIES
                   valueFrom:
                     secretKeyRef:
@@ -35,14 +35,11 @@ spec:
                 - name: PROXYPOOL_URL
                   valueFrom:
                     secretKeyRef:
-                      name: proxypool
-                      key: weibo
-                - name: PROXYTUNNEL_URL
-                  valueFrom:
-                    secretKeyRef:
-                      name: proxytunnel
-                      key: value
-              image: germey/crawler-weibo-single:${TAG}
+                      name: adslproxy
+                      key: universal
+                - name: PROXYPOOL_ENABLED
+                  value: 'true'
+              image: germey/crawler-weibo-single
               name: crawler-weibo-single
               imagePullPolicy: Always
               resources:

@@ -49,20 +49,17 @@ items:
                 - name: PROXYPOOL_URL
                   valueFrom:
                     secretKeyRef:
-                      name: proxypool
-                      key: weibo
-                - name: PROXYTUNNEL_URL
-                  valueFrom:
-                    secretKeyRef:
-                      name: proxytunnel
-                      key: value
+                      name: adslproxy
+                      key: universal
+                - name: PROXYPOOL_ENABLED
+                  value: 'true'
               image: germey/crawler-weibo-universal:${TAG}
               name: crawler-weibo-universal
               resources:
                 limits:
                   memory: "200Mi"
                   cpu: "150m"
-                requests: 
+                requests:
                   memory: "200Mi"
                   cpu: "150m"
           restartPolicy: Always

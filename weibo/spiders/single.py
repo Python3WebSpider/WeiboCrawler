@@ -9,6 +9,8 @@ import random
 
 env = Env()
 
+START_COMMENT_ID = env.str('START_COMMENT_ID', None)
+print('START_COMMENT_ID', START_COMMENT_ID)
 
 class SingleSpider(Spider):
     """
@@ -32,7 +34,7 @@ class SingleSpider(Spider):
             'weibo.middlewares.CSRFTokenMiddleware': 701,
             'weibo.middlewares.RetryCommentMiddleware': 551,
             'weibo.middlewares.ProxypoolMiddleware': 555 if env.bool('PROXYPOOL_ENABLED', True) else None,
-            'weibo.middlewares.ProxytunnelMiddleware': 556 if env.bool('PROXYTUNNEL_ENABLED', True) else None,
+            # 'weibo.middlewares.ProxytunnelMiddleware': 556 if env.bool('PROXYTUNNEL_ENABLED', True) else None,
         }
     }
     
@@ -51,7 +53,10 @@ class SingleSpider(Spider):
         start from defined users
         :return:
         """
-        url = self.start_url.format(weibo_id=self.weibo_id)
+        if not START_COMMENT_ID:
+            url = self.start_url.format(weibo_id=self.weibo_id)
+        else:
+            url = self.next_url.format(weibo_id=self.weibo_id, max_id=START_COMMENT_ID)
         # 赋值初始 Cookies
         cookies = {
             cookies_item.split('=')[0].strip(): cookies_item.split('=')[1].strip() for cookies_item in

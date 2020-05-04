@@ -7,6 +7,7 @@
 import logging
 import requests
 import json
+import re
 
 from scrapy.downloadermiddlewares.retry import RetryMiddleware
 
@@ -25,7 +26,7 @@ class ProxytunnelMiddleware(object):
         :param spider:
         :return:
         """
-        if request.meta.get('retry_times') and 1 <= request.meta.get('retry_times') <= 10:
+        if request.meta.get('retry_times'):
             self.logger.debug('Using proxytunnel')
             request.meta['proxy'] = self.proxytunnel_url
     
@@ -64,7 +65,12 @@ class ProxypoolMiddleware(object):
     
     def __init__(self, proxypool_url):
         self.logger = logging.getLogger(__name__)
-        self.proxypool_url = proxypool_url
+        if re.search('^https?://\S+:\S+@\S+', proxypool_url):
+            result = re.search('https?://(\S+):(\S+)@\S+', proxypool_url)
+            self.auth = result.group(1), result.group(2)
+            self.proxypool_url = re.sub('(https?://)\S+:\S+@(\S+)', r'\1\2', proxypool_url)
+        else:
+            self.proxypool_url = proxypool_url
     
     def get_random_proxy(self):
         """
@@ -72,7 +78,10 @@ class ProxypoolMiddleware(object):
         :return:
         """
         try:
-            response = requests.get(self.proxypool_url, timeout=5)
+            if self.auth:
+                response = requests.get(self.proxypool_url, timeout=5, auth=self.auth)
+            else:
+                response = requests.get(self.proxypool_url, timeout=5)
             if response.status_code == 200:
                 proxy = response.text
                 return proxy
@@ -86,7 +95,7 @@ class ProxypoolMiddleware(object):
         :param spider:
         :return:
         """
-        if request.meta.get('retry_times') and request.meta.get('retry_times') > 10:
+        if request.meta.get('retry_times'):
             proxy = self.get_random_proxy()
             self.logger.debug('Get proxy %s', proxy)
             if proxy:

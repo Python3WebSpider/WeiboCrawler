@@ -74,7 +74,7 @@ DEFAULT_REQUEST_HEADERS = {
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     'weibo.middlewares.ProxypoolMiddleware': 555 if env.bool('PROXYPOOL_ENABLED', True) else None,
-    'weibo.middlewares.ProxytunnelMiddleware': 556 if env.bool('PROXYTUNNEL_ENABLED', True) else None,
+    # 'weibo.middlewares.ProxytunnelMiddleware': 556 if env.bool('PROXYTUNNEL_ENABLED', True) else None,
 }
 
 # Enable or disable extensions
