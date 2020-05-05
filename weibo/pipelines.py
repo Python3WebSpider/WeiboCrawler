@@ -231,7 +231,10 @@ class ElasticsearchPipeline(object):
         :return:
         """
         if isinstance(item, UserItem) or isinstance(item, WeiboItem) or isinstance(item, CommentItem):
-            self.conn.index(index=item.index, id=item['id'], doc_type=item.type, body=dict(item))
+            self.conn.index(index=item.index,
+                            id=item['id'],
+                            doc_type=item.type,
+                            body=dict(item), timeout=60)
         return item
     
     def process_item(self, item, spider):

@@ -13,7 +13,7 @@ services:
     container_name: 'crawler-weibo-comment'
     restart: always
     build: .
-    image: 'germey/crawler-weibo-comment'
+    image: 'germey/crawler-weibo-comment:1'
     command: 'scrapy crawl comment'
     environment:
       ELASTICSEARCH_CONNECTION_STRING:
