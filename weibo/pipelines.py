@@ -8,6 +8,7 @@ import pymongo
 from weibo.items import *
 from twisted.internet.threads import deferToThread
 import pytz
+import dateparser
 
 logging.getLogger('scrapy.core.scraper').setLevel(logging.INFO)
 
@@ -53,7 +54,7 @@ class WeiboPipeline():
             date = time.strftime('%Y-%m-%d', time.localtime(time.time() - 24 * 60 * 60)) + ' ' + date + ':00'
         if re.match('\d{2}-\d{2}', date):
             date = time.strftime('%Y-', time.localtime()) + date + ' 00:00:00'
-        return date
+        return dateparser.parse(date)
     
     def process_item(self, item, spider):
         """
@@ -97,7 +98,7 @@ class CommentPipeline():
             date = time.strftime('%Y-%m-%d', time.localtime(time.time() - 24 * 60 * 60)) + ' ' + date + ':00'
         if re.match('\d{2}-\d{2}', date):
             date = time.strftime('%Y-', time.localtime()) + date + ' 00:00:00'
-        return date
+        return dateparser.parse(date)
     
     def process_item(self, item, spider):
         """

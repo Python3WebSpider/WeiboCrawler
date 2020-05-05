@@ -5,3 +5,4 @@ environs==7.2.0
 pymongo==3.10.1
 scrapy-redis==0.6.8
 pytz==2019.1
+dateparser==0.7.2
