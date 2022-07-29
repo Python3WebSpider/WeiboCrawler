@@ -1,5 +1,5 @@
 elasticsearch==7.0.2
-Scrapy==1.8.1
+Scrapy==2.6.2
 requests==2.22.0
 environs==7.2.0
 pymongo==3.10.1
